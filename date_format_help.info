@@ -1,0 +1,6 @@
+name = Date/Time Format Help
+description = A friendly copy of the date() options from the PHP manual on the formatter page.
+package = "Date/Time"
+core = 6.x
+
+dependencies[] = date_api
