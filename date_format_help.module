@@ -6,7 +6,10 @@ function date_format_help_form_alter(&$form, &$form_state, $form_id) {
     $form[] = array(
       '#type' => 'markup',
       '#value' => date_format_time_format_help_block(),
+      '#weight' => 101,
     );
+    $form['date_format']['#description'] = t('A user-defined date format. See below for available options or the !manual for more details.',
+      array('!manual' => l('PHP manual', 'http://php.net/manual/function.date.php')));
   }
 }
 
