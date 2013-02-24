@@ -75,7 +75,7 @@ function date_format_time_format_help_block() {
 
 function theme_date_format_help_formats($formats) {
   $output = '<div class="time-formats-help">';
-  foreach ($formats as $header => $formatters) { 
+  foreach ($formats as $header => $formatters) {
     $output .= '<div class="date-time-formatter-help-block">';
     $output .= '<h3>' . $header . '</h3>';
     $formatter_table = array();
@@ -90,6 +90,6 @@ function theme_date_format_help_formats($formats) {
     $output .= '</div>';
   }
   $output .= '</div>';
-  
+
   return $output;
 }
