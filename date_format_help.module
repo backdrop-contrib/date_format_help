@@ -1,12 +1,15 @@
 <?php
 
 function date_format_help_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id === 'date_api_add_date_formats_form') {
+  if ($form_id === 'system_configure_date_formats_form') {
     drupal_add_css(drupal_get_path('module', 'date_format_help') .'/date_format_help.css');
     $form[] = array(
       '#type' => 'markup',
-      '#value' => date_format_time_format_help_block(),
+      '#markup' => date_format_time_format_help_block(),
+      '#weight' => 101,
     );
+    $form['date_format']['#description'] = t('A user-defined date format. See below for available options or the !manual for more details.',
+      array('!manual' => l('PHP manual', 'http://php.net/manual/function.date.php')));
   }
 }
 
@@ -83,7 +86,7 @@ function theme_date_format_help_formats($formats) {
         date($key),
       );
     }
-    $output .= theme_table(array(), $formatter_table);
+    $output .= theme('table', (array('rows' => $formatter_table)));
     $output .= '</div>';
   }
   $output .= '</div>';
