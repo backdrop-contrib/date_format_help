@@ -2,12 +2,9 @@
 
 function date_format_help_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id === 'system_configure_date_formats_form') {
-    $form['date_format_help'] = array(
-      '#type' => 'markup',
-      '#markup' => date_format_time_format_help_block(),
-      '#weight' => 101,
-    );
-    $form['date_format_help']['#attached']['css'][] = drupal_get_path('module', 'date_format_help') . '/date_format_help.css';
+    $form['date_format_help'] = date_format_time_format_help_block();
+    $form['date_format_help']['#weight'] = 101;
+
     $form['date_format']['#description'] = t('A user-defined date format. See below for available options or the !manual for more details.',
       array('!manual' => l('PHP manual', 'http://php.net/manual/function.date.php')));
   }
@@ -70,14 +67,17 @@ function date_format_time_format_help_block() {
     ),
   );
 
-  return theme_date_format_help_formats($date_formats) . theme_date_format_help_formats($time_formats);
+  $block = array_merge(theme_date_format_help_formats($date_formats), theme_date_format_help_formats($time_formats));
+  $block['#attached']['css'][] = drupal_get_path('module', 'date_format_help') . '/date_format_help.css';
+
+  return $block;
 }
 
 function theme_date_format_help_formats($formats) {
-  $output = '<div class="time-formats-help">';
+  $tables = array();
+  $tables['#type'] = 'container';
+  $tables['#prefix'] = '<div class="time-formats-help">';
   foreach ($formats as $header => $formatters) {
-    $output .= '<div class="date-time-formatter-help-block">';
-    $output .= '<h3>' . $header . '</h3>';
     $formatter_table = array();
     foreach ($formatters as $key => $value) {
       $formatter_table[] = array(
@@ -86,10 +86,18 @@ function theme_date_format_help_formats($formats) {
         date($key),
       );
     }
-    $output .= theme('table', (array('rows' => $formatter_table)));
-    $output .= '</div>';
+    $prefix = '<div class="date-time-formatter-help-block">';
+    $prefix .= '<h3>' . $header . '</h3>';
+    $tables[] = array(
+      '#prefix' => $prefix,
+      '#suffix' => '</div>',
+      '#theme' => 'table',
+      '#rows' => $formatter_table,
+      '#title' => $header,
+    );
   }
-  $output .= '</div>';
 
-  return $output;
+  $tables['suffix'] = array('#markup' => '</div>');
+
+  return $tables;
 }
