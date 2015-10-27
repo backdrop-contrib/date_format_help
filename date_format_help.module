@@ -2,12 +2,12 @@
 
 function date_format_help_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id === 'system_configure_date_formats_form') {
-    drupal_add_css(drupal_get_path('module', 'date_format_help') .'/date_format_help.css');
-    $form[] = array(
+    $form['date_format_help'] = array(
       '#type' => 'markup',
       '#markup' => date_format_time_format_help_block(),
       '#weight' => 101,
     );
+    $form['date_format_help']['#attached']['css'][] = drupal_get_path('module', 'date_format_help') . '/date_format_help.css';
     $form['date_format']['#description'] = t('A user-defined date format. See below for available options or the !manual for more details.',
       array('!manual' => l('PHP manual', 'http://php.net/manual/function.date.php')));
   }
