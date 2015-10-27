@@ -77,6 +77,8 @@ function theme_date_format_help_formats($formats) {
   $tables = array();
   $tables['#type'] = 'container';
   $tables['#prefix'] = '<div class="time-formats-help">';
+  $tables['#suffix'] = '</div>';
+
   foreach ($formats as $header => $formatters) {
     $formatter_table = array();
     foreach ($formatters as $key => $value) {
@@ -95,8 +97,6 @@ function theme_date_format_help_formats($formats) {
       '#rows' => $formatter_table,
     );
   }
-
-  $tables['suffix'] = array('#markup' => '</div>');
 
   return $tables;
 }
