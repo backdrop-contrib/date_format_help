@@ -93,7 +93,6 @@ function theme_date_format_help_formats($formats) {
       '#suffix' => '</div>',
       '#theme' => 'table',
       '#rows' => $formatter_table,
-      '#title' => $header,
     );
   }
 
