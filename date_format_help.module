@@ -89,7 +89,7 @@ function date_format_help_time_format_help_block() {
     theme('date_format_help_formats', array('formats' => $date_formats)),
     theme('date_format_help_formats', array('formats' => $time_formats))
   );
-  $block['#attached']['css'][] = drupal_get_path('module', 'date_format_help') . '/css/date_format_help.css';
+  $block['#attached']['css'][] = backdrop_get_path('module', 'date_format_help') . '/css/date_format_help.css';
 
   return $block;
 }
