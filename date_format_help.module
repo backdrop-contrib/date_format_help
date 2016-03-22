@@ -2,7 +2,7 @@
 
 function date_format_help_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id === 'system_configure_date_formats_form') {
-    $form['date_format_help'] = date_format_time_format_help_block();
+    $form['date_format_help'] = date_format_help_time_format_help_block();
     $form['date_format_help']['#weight'] = 101;
 
     $form['date_format']['#description'] = t('A user-defined date format. See below for available options or the !manual for more details.',
@@ -10,7 +10,16 @@ function date_format_help_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
-function date_format_time_format_help_block() {
+function date_format_help_theme() {
+  return array(
+    'date_format_help_formats' => array(
+      'variables' => array('formats' => NULL),
+      'file' => 'date_format_help.theme.inc',
+    ),
+  );
+}
+
+function date_format_help_time_format_help_block() {
   $date_formats = array(
     'Day' => array(
       'd' => t('Day of the month, 2 digits with leading zeros &mdash; 01 to 31'),
@@ -67,36 +76,11 @@ function date_format_time_format_help_block() {
     ),
   );
 
-  $block = array_merge(theme_date_format_help_formats($date_formats), theme_date_format_help_formats($time_formats));
+  $block = array_merge(
+    theme('date_format_help_formats', array('formats' => $date_formats)),
+    theme('date_format_help_formats', array('formats' => $time_formats))
+  );
   $block['#attached']['css'][] = drupal_get_path('module', 'date_format_help') . '/css/date_format_help.css';
 
   return $block;
-}
-
-function theme_date_format_help_formats($formats) {
-  $tables = array();
-  $tables['#type'] = 'container';
-  $tables['#prefix'] = '<div class="time-formats-help">';
-  $tables['#suffix'] = '</div>';
-
-  foreach ($formats as $header => $formatters) {
-    $formatter_table = array();
-    foreach ($formatters as $key => $value) {
-      $formatter_table[] = array(
-        $key,
-        $value,
-        date($key),
-      );
-    }
-    $prefix = '<div class="date-time-formatter-help-block">';
-    $prefix .= '<h3>' . $header . '</h3>';
-    $tables[] = array(
-      '#prefix' => $prefix,
-      '#suffix' => '</div>',
-      '#theme' => 'table',
-      '#rows' => $formatter_table,
-    );
-  }
-
-  return $tables;
 }
