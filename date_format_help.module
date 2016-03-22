@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Implements hook_form_alter().
+ */
 function date_format_help_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id === 'system_configure_date_formats_form') {
     $form['date_format_help'] = date_format_help_time_format_help_block();
@@ -10,6 +12,9 @@ function date_format_help_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
+/**
+ * Implements hook_theme().
+ */
 function date_format_help_theme() {
   return array(
     'date_format_help_formats' => array(
@@ -19,6 +24,10 @@ function date_format_help_theme() {
   );
 }
 
+/**
+ * Create a block showing all the  date and time formats available in PHP's
+ * date() function, with examples.
+ */
 function date_format_help_time_format_help_block() {
   $date_formats = array(
     'Day' => array(

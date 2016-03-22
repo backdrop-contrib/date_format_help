@@ -1,6 +1,11 @@
 <?php
 
+/**
+ * For a set of formats, create a table of the settings, descriptions and
+ * examples.
+ */
 function theme_date_format_help_formats($variables) {
+  // Pull out $formats from the $variables array
   extract($variables);
 
   $tables = array();
