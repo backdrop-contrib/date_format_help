@@ -68,7 +68,7 @@ function date_format_time_format_help_block() {
   );
 
   $block = array_merge(theme_date_format_help_formats($date_formats), theme_date_format_help_formats($time_formats));
-  $block['#attached']['css'][] = drupal_get_path('module', 'date_format_help') . '/date_format_help.css';
+  $block['#attached']['css'][] = drupal_get_path('module', 'date_format_help') . '/css/date_format_help.css';
 
   return $block;
 }
